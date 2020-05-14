@@ -15,7 +15,7 @@ $(document).on('change', 'input[name=checkrespuesta]:checked', function(event) {
 $(document).on('click', '.btn-resp', function(event) {
 	event.preventDefault();
 	let valor = $(this).attr('valor');
-	$("#modalVideoResp").html('<video src="./videos/exam1/resp1/rsp'+valor+'.mp4" width="100%" autoplay controls> </video>');
+	$("#modalVideoResp").html('<video src="./videos/exam1/resp1/rsp'+valor+'.mp4" width="100%" style="" autoplay controls> </video>');
 	$("#modalRespuesta").modal("show");
 });
 
@@ -39,7 +39,7 @@ function seleccionaPregunta(id){
 			opcionesResp += '<label> &nbsp;&nbsp;Respuesta '+val.resp_opcion+'</label> <button type="button" class="btn btn-info btn-resp" valor="'+val.resp_id+'"><span class="glyphicon glyphicon-eye-open"></span></button>'
 			opcionesResp += '</li>';
 		});
-		$("#contentVideo").html('<video src="./videos/exam'+data.preg_cuestionario+'/videop'+data.preg_numero+'.mp4" width="100%" autoplay controls style="border: 1px solid black"></video>');
+		$("#contentVideo").html('<video src="./videos/exam'+data.preg_cuestionario+'/videop'+data.preg_numero+'.mp4" width="100%" autoplay controls style="border: 1px solid black; max-height: 500px;"></video>');
 		$("#listaOpcionesDatos").html(opcionesResp);
 		$(".preguntaDato").each(function(index, el) {
 			$(this).removeClass('actual');
