@@ -36,7 +36,7 @@ function seleccionaPregunta(id){
 		$.each(data.respuestas, function(index, val) {
 			opcionesResp += '<li class="list-group-item liOption" valor-opt="'+val.resp_id+'">';
 			opcionesResp +=	'<input type="radio" name="checkrespuesta" valor="'+val.resp_id+'">'
-			opcionesResp += '<label> &nbsp;&nbsp;Respuesta '+val.resp_opcion+'</label> <button type="button" class="btn btn-info btn-resp" valor="'+val.resp_id+'"><span class="glyphicon glyphicon-eye-open"></span></button>'
+			opcionesResp += '<label> &nbsp;&nbsp;Opción '+val.resp_opcion+'</label> <button type="button" class="btn btn-info btn-resp" valor="'+val.resp_id+'"><span class="glyphicon glyphicon-eye-open"></span></button>'
 			opcionesResp += '</li>';
 		});
 		$("#contentVideo").html('<video src="./videos/exam'+data.preg_cuestionario+'/videop'+data.preg_numero+'.mp4" width="100%" autoplay controls style="border: 1px solid black; max-height: 500px;"></video>');
