@@ -31,11 +31,11 @@
     }
 
     table#tablePregunta tbody tr td.actual{
-      background: #3354a5;
+      background: #3354a5 !important;
     }
 
     table#tablePregunta tbody tr td.contestada{
-      background: #3354a5;
+      background: #00bc91;
     }
   </style>
 </head>
@@ -45,9 +45,9 @@
   <div class="container-fluid">
     <div class="navbar-form navbar-right">
       <div class="form-group" style="padding-right: 5px;">
-        <label>Nombre completo del aspirante de licenciatura</label>
+        <label><?= $this->session->userdata('nombre'); ?></label>
       </div>
-      <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-log-out"></span> Salir</button>
+      <button type="button" id="btnSalir" class="btn btn-success"><span class="glyphicon glyphicon-log-out"></span> Salir</button>
     </div>
   </div>
 </nav>
@@ -58,15 +58,9 @@
       <div>
         <h2 id="txtPregunta"></h2>
         <div id="contentVideo">
-          
         </div>
-        
       </div>
-      <div id="divPreguntas">
-        <p>Selecciona la respuesta correcta</p>
-        <ul class="list-group" id="listaOpcionesDatos">
-        </ul>
-      </div>
+      
       
     </div>
     <div class="col-md-4" style="margin-top: 50px;">
@@ -83,11 +77,21 @@
         </tbody>
       </table>
       <div style="text-align: center;">
-        <button class="btn btn-success btn-lg">Terminar Examen</button>
+        <button class="btn btn-success btn-lg" type="button" id="btnFinalizar">Terminar Examen</button>
       </div>
-      
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-8">
+      <div id="divPreguntas">
+        <p>Selecciona la respuesta correcta</p>
+        <ul class="list-group" id="listaOpcionesDatos">
+        </ul>
+      </div>
+      <button class="btn btn-primary" id="savePreg">Guardar Respuesta</button>
+    </div>
+  </div>
+  <div style="margin-bottom: 50px;"></div>
 </div>
 
 <div id="modalRespuesta" class="modal fade" role="dialog">
@@ -108,9 +112,30 @@
   </div>
 </div>
 
+<div id="modalFinalizar" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #c60a18;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body" id="modal_fin_msj">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btn_fin" class="btn btn-success" data-dismiss="modal">Finalizar</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script type="text/javascript">
+  var totalPreg = <?= $numPreguntas ?>;
   var primerPreg = <?= $preguntas[0][0]["id"] ?>;
   var base_url = "<?= base_url() ?>";
+  var pregContest = <?= json_encode($pregCont) ?>;
 </script>
 <script src="./js/preguntas.js"></script>
 </body>

@@ -3,6 +3,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Model_preguntas extends CI_Model {
 
+	public function verificaLogin($folio,$pass){
+		$this->db->select('*');
+		$this->db->from('cues_aspirantes');
+		$this->db->where('asp_folio', $folio);
+		$datosP = $this->db->get()->result();
+		if (count($datosP) > 0) {
+			if ($datosP[0]->asp_password == $pass) {
+				return $datosP[0];
+			}else{
+				return [];
+			}
+		}else{
+			return [];
+		}
+	}
+
 	public function cargaPreguntas(){
 		$this->db->select('*');
 		$this->db->from('cues_pregunta');
@@ -23,6 +39,42 @@ class Model_preguntas extends CI_Model {
 		$this->db->from('cues_repuesta');
 		$this->db->where('resp_idpregunta', $idpre);
 		return $this->db->get()->result();
+	}
+
+	public function preguntasContestadas($id_usuario){
+		$this->db->select('resp_usu_preg pregunta');
+		$this->db->from('cues_respuesta_usuario');
+		$this->db->where('resp_usu_aspirante', $id_usuario);
+		return $this->db->get()->result();
+	}
+
+	public function respuesta_preg($id_usu, $id_preg){
+		$this->db->select('resp_usu_resp respuesta');
+		$this->db->from('cues_respuesta_usuario');
+		$this->db->where('resp_usu_aspirante', $id_usu);
+		$this->db->where('resp_usu_preg', $id_preg);
+		$resultado = $this->db->get()->result();
+		if (count($resultado) > 0) {
+			return $resultado[0]->respuesta;
+		}else{
+			return null;
+		}
+	}
+
+	public function eliminaReg($id_usu, $id_preg){
+		$this->db->where('resp_usu_aspirante', $id_usu);
+		$this->db->where('resp_usu_preg', $id_preg);
+		$this->db->delete('cues_respuesta_usuario');
+	}
+
+	public function guardaRespuesta($id_usu, $id_preg, $id_resp){
+		$objeto = [
+			"resp_usu_preg" => $id_preg,
+			"resp_usu_resp" => $id_resp,
+			"resp_usu_aspirante" => $id_usu
+		];
+		$this->db->insert('cues_respuesta_usuario', $objeto);
+		return $objeto;
 	}
 
 }

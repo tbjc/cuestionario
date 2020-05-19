@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-05-2020 a las 17:27:07
+-- Tiempo de generación: 19-05-2020 a las 19:08:55
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.4
 
@@ -20,6 +20,30 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `db_cuestionario`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `cues_aspirantes`
+--
+
+CREATE TABLE `cues_aspirantes` (
+  `asp_id` int(11) NOT NULL,
+  `asp_folio` longtext DEFAULT NULL,
+  `asp_password` longtext DEFAULT NULL,
+  `asp_nombres` longtext DEFAULT NULL,
+  `asp_apellido1` longtext DEFAULT NULL,
+  `asp_apellido2` longtext DEFAULT NULL,
+  `asp_clave_ceneval` varchar(45) DEFAULT NULL,
+  `asp_fin_examen` varchar(45) DEFAULT 'N'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `cues_aspirantes`
+--
+
+INSERT INTO `cues_aspirantes` (`asp_id`, `asp_folio`, `asp_password`, `asp_nombres`, `asp_apellido1`, `asp_apellido2`, `asp_clave_ceneval`, `asp_fin_examen`) VALUES
+(1, 'LC2011111', 'asasas', 'aaa', 'aaa', 'aaa', 'aaa', 'N');
 
 -- --------------------------------------------------------
 
@@ -132,8 +156,24 @@ CREATE TABLE `cues_respuesta_usuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Volcado de datos para la tabla `cues_respuesta_usuario`
+--
+
+INSERT INTO `cues_respuesta_usuario` (`resp_usu_id`, `resp_usu_preg`, `resp_usu_resp`, `resp_usu_aspirante`) VALUES
+(2, 2, 5, 1),
+(3, 1, 2, 1),
+(4, 3, 9, 1),
+(5, 4, 14, 1);
+
+--
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `cues_aspirantes`
+--
+ALTER TABLE `cues_aspirantes`
+  ADD PRIMARY KEY (`asp_id`);
 
 --
 -- Indices de la tabla `cues_pregunta`
@@ -158,6 +198,12 @@ ALTER TABLE `cues_respuesta_usuario`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `cues_aspirantes`
+--
+ALTER TABLE `cues_aspirantes`
+  MODIFY `asp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT de la tabla `cues_pregunta`
 --
 ALTER TABLE `cues_pregunta`
@@ -173,7 +219,7 @@ ALTER TABLE `cues_repuesta`
 -- AUTO_INCREMENT de la tabla `cues_respuesta_usuario`
 --
 ALTER TABLE `cues_respuesta_usuario`
-  MODIFY `resp_usu_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `resp_usu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

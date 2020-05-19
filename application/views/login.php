@@ -4,8 +4,10 @@
 	<base href="<?= base_url() ?>">
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title></title>
+	<title>Examen de ingreso</title>
 	<link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+	<link rel="icon" type="text/css" href="./favicon.ico">
+	<script src="./js/jquery.min.js"></script>
 	<style type="text/css">
 		body{
 			background: #eaeaea;
@@ -20,7 +22,7 @@
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-md-10 col-md-offset-1">
-							<form>
+							<form id="formP">
 								<div style="text-align: center;">
 									<img src="./img/logo-simple.png">
 								</div>
@@ -28,20 +30,19 @@
 								<div class="form-group" style="margin-top: 30px;">
 									<div class="input-group">
 										<span class="input-group-addon" style="font-weight: bold;">FolioUV</span>
-										<input type="text" class="form-control">
+										<input type="text" id="input_folio" class="form-control" maxlength="9">
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="input-group">
 										<span class="input-group-addon" style="font-weight: bold;">Contraseña</span>
-										<input type="text" class="form-control">
+										<input type="password" id="input_password" class="form-control">
 									</div>
 								</div>
 								<div id="errores"></div>
 								<div style="text-align: right;">
-									<button type="submit" class="btn btn-success">Entrar</button>
+									<button type="button" id="btnLog" class="btn btn-success">Entrar</button>
 								</div>
-								
 							</form>
 						</div>
 					</div>
@@ -49,5 +50,9 @@
 			</div>
 		</div>
 	</div>
+	<script>
+		var base_url = "<?= base_url() ?>";
+	</script>
+	<script src="<?= base_url() ?>js/login.js"></script>
 </body>
 </html>
