@@ -10,12 +10,28 @@ class Model_preguntas extends CI_Model {
 		$datosP = $this->db->get()->result();
 		if (count($datosP) > 0) {
 			if ($datosP[0]->asp_password == $pass) {
-				return $datosP[0];
+				if ($datosP[0]->asp_fin_examen == "N") {
+					$pasa = [];
+					$pasa["pasa"] = "true";
+					$pasa["dato"] = $datosP[0];
+					return $pasa;
+				}else{
+					$pasa = [];
+					$pasa["pasa"] = "false";
+					$pasa["msj"] = "Ya terminaste el examen, no puedes volver a contestarlo";
+					return $pasa;
+				}
 			}else{
-				return [];
+				$pasa = [];
+				$pasa["pasa"] = "false";
+				$pasa["msj"] = "FolioUV o Contraseña incorrectos";
+				return $pasa;
 			}
 		}else{
-			return [];
+			$pasa = [];
+			$pasa["pasa"] = "false";
+			$pasa["msj"] = "FolioUV o Contraseña incorrectos";
+			return $pasa;
 		}
 	}
 

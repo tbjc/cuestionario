@@ -7,6 +7,7 @@ $(document).on('click', '#btnLog', function(event) {
 		"password" : pass
 	};
 	if (folio != "" && pass != "") {
+		$("#errores").html("");
 		$.ajax({
 			url: base_url+'index.php/inicio/login',
 			type: 'POST',
@@ -14,8 +15,10 @@ $(document).on('click', '#btnLog', function(event) {
 			data: peticion,
 		})
 		.done(function(data) {
-			if (data["pasa"] = "true") {
-				window.location.href = base_url+"index.php/inicio/preguntas";
+			if (data["pasa"] == "true") {
+				window.location.href = base_url+"index.php/inicio/instrucciones";
+			}else{
+				$("#errores").html('<div class="alert alert-danger" role="alert">'+data.msj+'</div>');
 			}
 		})
 		.fail(function() {
@@ -24,8 +27,8 @@ $(document).on('click', '#btnLog', function(event) {
 		.always(function() {
 			console.log("complete");
 		});
-		
+	}else{
+		$("#errores").html('<div class="alert alert-warning" role="alert">Debe introducir el FolioUV y la contraseña</div>');
 	}
-
 	
 });

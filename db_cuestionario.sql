@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-05-2020 a las 19:08:55
+-- Tiempo de generación: 21-05-2020 a las 00:44:20
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.4
 
@@ -160,10 +160,12 @@ CREATE TABLE `cues_respuesta_usuario` (
 --
 
 INSERT INTO `cues_respuesta_usuario` (`resp_usu_id`, `resp_usu_preg`, `resp_usu_resp`, `resp_usu_aspirante`) VALUES
-(2, 2, 5, 1),
-(3, 1, 2, 1),
-(4, 3, 9, 1),
-(5, 4, 14, 1);
+(20, 9, 34, 1),
+(21, 8, 30, 1),
+(22, 10, 38, 1),
+(23, 11, 44, 1),
+(26, 2, 7, 1),
+(27, 1, 3, 1);
 
 --
 -- Índices para tablas volcadas
@@ -219,7 +221,7 @@ ALTER TABLE `cues_repuesta`
 -- AUTO_INCREMENT de la tabla `cues_respuesta_usuario`
 --
 ALTER TABLE `cues_respuesta_usuario`
-  MODIFY `resp_usu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `resp_usu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -22,7 +22,7 @@
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-md-10 col-md-offset-1">
-							<form id="formP">
+							<div id="formP">
 								<div style="text-align: center;">
 									<img src="./img/logo-simple.png">
 								</div>
@@ -43,7 +43,7 @@
 								<div style="text-align: right;">
 									<button type="button" id="btnLog" class="btn btn-success">Entrar</button>
 								</div>
-							</form>
+							</div>
 						</div>
 					</div>
 				</div>

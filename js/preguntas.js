@@ -4,6 +4,7 @@ seleccionaPregunta(primerPreg);
 var guardandoRespuesta = false;
 
 $.each(pregContest, function(index, val) {
+	$("td.preguntaDato[preg-id="+val.pregunta+"]").removeClass('noContestada');
 	$("td.preguntaDato[preg-id="+val.pregunta+"]").addClass('contestada');
 });
 
@@ -19,8 +20,11 @@ $(document).on('change', 'input[name=checkrespuesta]:checked', function(event) {
 
 $(document).on('click', '.btn-resp', function(event) {
 	event.preventDefault();
+
 	let valor = $(this).attr('valor');
 	$("#modalVideoResp").html('<video src="./videos/exam1/resp1/rsp'+valor+'.mp4" width="100%" style="" autoplay controls> </video>');
+	let vid = document.getElementById("videoP");
+	vid.pause();
 	$("#modalRespuesta").modal("show");
 });
 
@@ -44,7 +48,7 @@ function seleccionaPregunta(id){
 			opcionesResp += '<label> &nbsp;&nbsp;Opción '+val.resp_opcion+'</label> <button type="button" class="btn btn-info btn-resp" valor="'+val.resp_id+'"><span class="glyphicon glyphicon-eye-open"></span></button>'
 			opcionesResp += '</li>';
 		});
-		$("#contentVideo").html('<video src="./videos/exam'+data.preg_cuestionario+'/videop'+data.preg_numero+'.mp4" width="100%" autoplay controls style="border: 1px solid black; max-height: 500px;"></video>');
+		$("#contentVideo").html('<video id="videoP" src="./videos/exam'+data.preg_cuestionario+'/videop'+data.preg_numero+'.mp4" width="100%" autoplay controls style="border: 1px solid black; max-height: 500px;"></video>');
 		$("#listaOpcionesDatos").html(opcionesResp);
 		$(".preguntaDato").each(function(index, el) {
 			$(this).removeClass('actual');
@@ -77,6 +81,8 @@ $(document).on('click', '#btnSalir', function(event) {
 $(document).on('click', '#btnFinalizar', function(event) {
 	event.preventDefault();
 	$("#modal_fin_msj").html("<h3 style='text-align:center;'>¿Estas Seguro de querer finalizar el examen?</h3>");
+	let vid = document.getElementById("videoP");
+	vid.pause();
 	$("#modalFinalizar").modal("show");
 });
 
@@ -98,10 +104,15 @@ $(document).on('click', '#savePreg', function(event) {
 		.done(function(data) {
 			console.log(data);
 			guardandoRespuesta = false;
+			$("td.preguntaDato[preg-id="+data.resp_usu_preg+"]").removeClass('noContestada');
 			$("td.preguntaDato[preg-id="+data.resp_usu_preg+"]").addClass('contestada');
 			if ($("td.contestada").length == totalPreg) {
-				$("#modal_fin_msj").html("<h3 style='text-align:center;'>Has terminado de contestar el examen ¿Quieres finalizarlo?</h3>");
+				$("#modal_fin_msj").html("<h3 style='text-align:center;'> Respuesta Guardada <br> Has terminado el examen ¿Quieres finalizarlo?</h3>");
+				let vid = document.getElementById("videoP");
+				vid.pause();
 				$("#modalFinalizar").modal("show");
+			}else{
+				$("#modalGuardaResp").modal("show");
 			}
 		})
 		.fail(function() {
@@ -112,3 +123,21 @@ $(document).on('click', '#savePreg', function(event) {
 		});
 	}
 });
+
+$(document).on('click', '#btnSigPreg', function(event) {
+	event.preventDefault();
+	let numNoCon = $("td.noContestada").length;
+	if (numNoCon > 0) {
+		let arrayNoCont = $("td.noContestada").toArray();
+		let noCont = arrayNoCont[0];
+		seleccionaPregunta($(noCont).attr('preg-id'));
+		$("#modalGuardaResp").modal("hide");
+
+	}
+});
+
+$(document).on('click', '#btn_fin', function(event) {
+	event.preventDefault();
+	window.location.href = base_url+"index.php/inicio/salir";
+});
+

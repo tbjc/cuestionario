@@ -64,18 +64,29 @@
       
     </div>
     <div class="col-md-4" style="margin-top: 50px;">
-      <table class="table table-bordered" id="tablePregunta">
-        <tbody>
-          <?php foreach($preguntas as $renglon){ ?>
-            <tr>
-            <?php foreach($renglon as $pregunta){ ?>
-              <td class="preguntaDato" preg-id="<?= $pregunta["id"] ?>"><?= $pregunta["numero"] ?></td>
+      <div style="padding: 15px;">
+        <table>
+          <tbody>
+            <tr><td style="background-color: #3354a5;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;Pregunta actual</td></tr>
+            <tr><td style="background-color: #00bc91;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;Contestadas</td></tr>
+            <tr><td style="background-color: #59a533;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;No contestadas</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <table class="table table-bordered" id="tablePregunta">
+          <tbody>
+            <?php foreach($preguntas as $renglon){ ?>
+              <tr>
+              <?php foreach($renglon as $pregunta){ ?>
+                <td class="preguntaDato noContestada" preg-id="<?= $pregunta["id"] ?>"><?= $pregunta["numero"] ?></td>
+              <?php } ?>
+              </tr>
             <?php } ?>
-            </tr>
-          <?php } ?>
 
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
       <div style="text-align: center;">
         <button class="btn btn-success btn-lg" type="button" id="btnFinalizar">Terminar Examen</button>
       </div>
@@ -112,7 +123,7 @@
   </div>
 </div>
 
-<div id="modalFinalizar" class="modal fade" role="dialog">
+<div id="modalFinalizar" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog">
     <!-- Modal content-->
     <div class="modal-content">
@@ -126,6 +137,24 @@
       <div class="modal-footer">
         <button type="button" id="btn_fin" class="btn btn-success" data-dismiss="modal">Finalizar</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modalGuardaResp" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #122d66;">
+        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+        <h4 class="modal-title" style="color: white;">Guardado</h4>
+      </div>
+      <div class="modal-body" id="">
+        <h3>Respuesta guardada</h3>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnSigPreg" class="btn btn-success">Siguiente pregunta</button>
       </div>
     </div>
   </div>
