@@ -58,6 +58,10 @@ class Inicio extends CI_Controller {
 		if ($this->session->userdata('id') == null) {
 			redirect('/','refresh');
 		}
+		$id = $this->session->userdata('id');
+		$this->db->where('asp_id', $id);
+		$this->db->update('cues_aspirantes', ["asp_fin_examen" => "S"]);
+		$this->session->sess_destroy();
 
 	}
 

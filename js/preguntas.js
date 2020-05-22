@@ -3,9 +3,90 @@ seleccionaPregunta(primerPreg);
 
 var guardandoRespuesta = false;
 
+var pausa = false;
+
+var setCronometro;
+
+var tiempo = new Date();
+
+var horaFinal = tiempo.getHours() + 4;
+var minFinal = tiempo.getMinutes() + 30;
+var segFinal = tiempo.getSeconds();
+var diaFinal = tiempo.getDate();
+if (minFinal > 59 ) {
+	minFinal = minFinal - 60;
+	horaFinal++;
+}
+
+if (minFinal > 59 ) {
+	minFinal = minFinal - 60;
+	horaFinal++;
+}
+
+if (horaFinal > 23) {
+	horaFinal -= 24;
+	diaFinal++;
+}
+
+var inicio_pausa;
+var termina_pausa;
+
+var finalTiempo = new Date(tiempo.getFullYear(),tiempo.getMonth(),diaFinal,horaFinal,minFinal,segFinal);
+
+console.log(finalTiempo);
+
+console.log(horaFinal+":"+minFinal);
+
+function cronometro(){
+	setCronometro = setInterval(function(){
+		if (!pausa) {
+			let actual = new Date();
+			transcurso = (finalTiempo.getTime() - actual.getTime() + 1000)/1000;
+			segundos = ('0' + Math.floor(transcurso % 60)).slice(-2);
+			minutos = ('0' + Math.floor(transcurso / 60 % 60)).slice(-2);
+			horas = ('0' + Math.floor(transcurso / 3600 % 24)).slice(-2);
+			if (horas == "-1") {
+				terminaExamen();
+			}else{
+				$("#relog_dato").html(horas+":"+minutos+":"+segundos);
+			}
+		}
+	},1000);
+}
+
+function terminaExamen(){
+	clearInterval(setCronometro);
+	window.location.href = base_url+"index.php/inicio/salir";
+}
+
+cronometro();
+
 $.each(pregContest, function(index, val) {
 	$("td.preguntaDato[preg-id="+val.pregunta+"]").removeClass('noContestada');
 	$("td.preguntaDato[preg-id="+val.pregunta+"]").addClass('contestada');
+});
+
+$(document).on('click', '#btn_pausa', function(event) {
+	event.preventDefault();
+	pausa = true;
+	inicio_pausa = new Date();
+	$("#modalPausaCuest").modal("show");
+});
+
+$(document).on('click', '#btnQuitaPausa', function(event) {
+	event.preventDefault();
+	termina_pausa = new Date();
+	transcurso_pausa = (termina_pausa.getTime() - inicio_pausa.getTime() + 1000)/1000;
+	seg_dat = parseInt(('0' + Math.floor(transcurso_pausa % 60)).slice(-2));
+	min_dat = parseInt(('0' + Math.floor(transcurso_pausa / 60 % 60)).slice(-2));
+	hor_dat = parseInt(('0' + Math.floor(transcurso_pausa / 3600 % 24)).slice(-2));
+	horaFinal += hor_dat;
+	minFinal += min_dat;
+	segFinal += seg_dat;
+	finalTiempo = new Date(tiempo.getFullYear(),tiempo.getMonth(),diaFinal,horaFinal,minFinal,segFinal);
+	$("#modalPausaCuest").modal("hide");
+	pausa = false;
+	console.log(hor_dat+":"+min_dat+":"+seg_dat);
 });
 
 $(document).on('change', 'input[name=checkrespuesta]:checked', function(event) {

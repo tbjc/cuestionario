@@ -64,6 +64,11 @@
       
     </div>
     <div class="col-md-4" style="margin-top: 50px;">
+      <h1 id="relog_dato" style="text-align: center;">04:30:00</h1>
+      <div style="text-align: center;">
+        <button class="btn btn-warning" type="button" id="btn_pausa">Pausar</button>
+        <button class="btn btn-success" type="button" id="btnFinalizar">Terminar</button>
+      </div>
       <div style="padding: 15px;">
         <table>
           <tbody>
@@ -83,12 +88,8 @@
               <?php } ?>
               </tr>
             <?php } ?>
-
           </tbody>
         </table>
-      </div>
-      <div style="text-align: center;">
-        <button class="btn btn-success btn-lg" type="button" id="btnFinalizar">Terminar Examen</button>
       </div>
     </div>
   </div>
@@ -144,10 +145,8 @@
 
 <div id="modalGuardaResp" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog">
-    <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header" style="background-color: #122d66;">
-        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
         <h4 class="modal-title" style="color: white;">Guardado</h4>
       </div>
       <div class="modal-body" id="">
@@ -155,6 +154,22 @@
       </div>
       <div class="modal-footer">
         <button type="button" id="btnSigPreg" class="btn btn-success">Siguiente pregunta</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modalPausaCuest" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #122d66;">
+        <h4 class="modal-title" style="color: white;">Examen Pausado</h4>
+      </div>
+      <div class="modal-body" id="">
+        <h2>Usted ha pausado el examen</h2>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnQuitaPausa" class="btn btn-success">Continuar Cuestionario</button>
       </div>
     </div>
   </div>
