@@ -22,6 +22,12 @@
       cursor: pointer;
     }
 
+    #relog_dato{
+      font-size: 20px;
+      margin-left: 20px;
+      margin-right: 20px;
+    }
+
     table#tablePregunta tbody tr td{
       padding: 3px;
       border: 1px solid black;
@@ -43,16 +49,30 @@
 
 <nav class="navbar navbar-default" style="border-bottom: 1px solid #aaa">
   <div class="container-fluid">
-    <div class="navbar-form navbar-right">
+    <div class="navbar-form navbar-left">
       <div class="form-group" style="padding-right: 5px;">
         <label><?= $this->session->userdata('nombre'); ?></label>
       </div>
-      <button type="button" id="btnSalir" class="btn btn-success"><span class="glyphicon glyphicon-log-out"></span> Salir</button>
+      <div class="form-group" id="divBtnInicio">
+        <button class="btn btn-primary" type="button" id="btn_inicia_examen"><span class="glyphicon glyphicon-play"></span> Iniciar</button>
+      </div>
+      <div class="form-group">
+        <label id="relog_dato">00:00:00</label>
+      </div>
+      <div class="form-group" id="div_controles" style="display: none;">
+        <button class="btn btn-warning" type="button" id="btn_pausa"><span class="glyphicon glyphicon-pause"></span>Pausar</button>
+        <button class="btn btn-success" type="button" id="btnFinalizar">Terminar</button>
+      </div>
+      
     </div>
   </div>
 </nav>
+
+<div class="container" id="contenedorInicio">
+  <h1 style="text-align: center;">Para iniciar el examen presione el botón "Iniciar"</h1>
+</div>
   
-<div class="container">
+<div class="container" id="contenedorPreguntas" style="display: none;">
   <div class="row">
     <div class="col-md-8">
       <div>
@@ -64,21 +84,7 @@
       
     </div>
     <div class="col-md-4" style="margin-top: 50px;">
-      <h1 id="relog_dato" style="text-align: center;">04:30:00</h1>
-      <div style="text-align: center;">
-        <button class="btn btn-warning" type="button" id="btn_pausa">Pausar</button>
-        <button class="btn btn-success" type="button" id="btnFinalizar">Terminar</button>
-      </div>
-      <div style="padding: 15px;">
-        <table>
-          <tbody>
-            <tr><td style="background-color: #3354a5;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;Pregunta actual</td></tr>
-            <tr><td style="background-color: #00bc91;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;Contestadas</td></tr>
-            <tr><td style="background-color: #59a533;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;No contestadas</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div>
+      <div style="padding-top: 15px;">
         <table class="table table-bordered" id="tablePregunta">
           <tbody>
             <?php foreach($preguntas as $renglon){ ?>
@@ -91,12 +97,26 @@
           </tbody>
         </table>
       </div>
+      <div>
+        <table>
+          <tbody>
+            <tr>
+              <td style="background-color: #3354a5;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+              <td style="font-size: 12px;">&nbsp;Pregunta actual &nbsp;</td>
+              <td style="background-color: #00bc91;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+              <td style="font-size: 12px;">&nbsp;Contestadas &nbsp;</td>
+              <td style="background-color: #59a533;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+              <td style="font-size: 12px;">&nbsp;No contestadas &nbsp;</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-8">
       <div id="divPreguntas">
-        <p>Selecciona la respuesta correcta</p>
+        <h2>Selecciona la respuesta correcta</h2>
         <ul class="list-group" id="listaOpcionesDatos">
         </ul>
       </div>
@@ -166,7 +186,22 @@
         <h4 class="modal-title" style="color: white;">Examen Pausado</h4>
       </div>
       <div class="modal-body" id="">
-        <h2>Usted ha pausado el examen</h2>
+        <h4 style="text-align: center;">Para poder continuar con el examen es necesario que use su FolioUV y Contraseña</h4>
+        <div class="">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon" style="font-weight: bold;">FolioUV</span>
+              <input type="text" id="input_folio" class="form-control" maxlength="9">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon" style="font-weight: bold;">Contraseña</span>
+              <input type="password" id="input_password" class="form-control">
+            </div>
+          </div>
+          <div id="errores_login2"></div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" id="btnQuitaPausa" class="btn btn-success">Continuar Cuestionario</button>
@@ -176,6 +211,30 @@
 </div>
 
 <script type="text/javascript">
+  function keepsession(){
+    setTimeout(function(){ 
+      $.ajax({
+        url: "<?= base_url() ?>index.php/inicio/keepsession",
+        type: 'GET',
+      })
+      .done(function(data) {
+        keepsession();
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+      
+    }, 60000);
+  }
+
+  keepsession();
+</script>
+
+<script type="text/javascript">
+  var hora_inicio = '<?= $hora_inicio ?>';
   var totalPreg = <?= $numPreguntas ?>;
   var primerPreg = <?= $preguntas[0][0]["id"] ?>;
   var base_url = "<?= base_url() ?>";

@@ -15,19 +15,23 @@
 	</style>
 </head>
 <body>
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3" style="margin-top: 40px;">
+			<video controls style="width: 100%;">
+				<source src="./videos/videoInicio.mp4" type="video/mp4">
+			</video>
+		</div>
+	</div>
 	<div class="row justify-content-md-center">
 		<div class="col-md-4 col-md-offset-4">
-			<div class="panel panel-primary" style="margin-top: 50px;">
+			<div class="panel panel-primary" style="">
 
 				<div class="panel-body">
 					<div class="row">
-						<div class="col-md-10 col-md-offset-1">
+						<div class="col-md-12">
 							<div id="formP">
-								<div style="text-align: center;">
-									<img src="./img/logo-simple.png">
-								</div>
-								<div style="margin-top: 20px; text-align: center;">Inicio de Sesion</div>
-								<div class="form-group" style="margin-top: 30px;">
+								<div style="text-align: center;">Inicio de Sesion</div>
+								<div class="form-group" style="margin-top: 15px;">
 									<div class="input-group">
 										<span class="input-group-addon" style="font-weight: bold;">FolioUV</span>
 										<input type="text" id="input_folio" class="form-control" maxlength="9">

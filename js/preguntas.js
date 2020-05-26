@@ -13,10 +13,6 @@ var horaFinal = tiempo.getHours() + 4;
 var minFinal = tiempo.getMinutes() + 30;
 var segFinal = tiempo.getSeconds();
 var diaFinal = tiempo.getDate();
-if (minFinal > 59 ) {
-	minFinal = minFinal - 60;
-	horaFinal++;
-}
 
 if (minFinal > 59 ) {
 	minFinal = minFinal - 60;
@@ -37,6 +33,24 @@ console.log(finalTiempo);
 
 console.log(horaFinal+":"+minFinal);
 
+if (hora_inicio != '00:00:00') {
+	let array_hora = hora_inicio.split(":");
+	console.log(array_hora);
+	horaFinal = parseInt(array_hora[0]) + 4;
+	minFinal = parseInt(array_hora[1]) + 30;
+	if (minFinal > 59) {
+		horaFinal++;
+		minFinal-= 60;
+	}
+	segFinal = parseInt(array_hora[2]);
+	finalTiempo = new Date(tiempo.getFullYear(),tiempo.getMonth(),diaFinal,horaFinal,minFinal,segFinal);
+	$("#divBtnInicio").css('display', 'none');
+	$("#div_controles").css('display', 'inline-block');
+	$("#contenedorInicio").css('display', 'none');
+	$("#contenedorPreguntas").css('display', 'block');
+	cronometro();
+}
+
 function cronometro(){
 	setCronometro = setInterval(function(){
 		if (!pausa) {
@@ -47,6 +61,7 @@ function cronometro(){
 			horas = ('0' + Math.floor(transcurso / 3600 % 24)).slice(-2);
 			if (horas == "-1") {
 				terminaExamen();
+				//$("#relog_dato").html(horas+":"+minutos+":"+segundos);
 			}else{
 				$("#relog_dato").html(horas+":"+minutos+":"+segundos);
 			}
@@ -59,34 +74,88 @@ function terminaExamen(){
 	window.location.href = base_url+"index.php/inicio/salir";
 }
 
-cronometro();
+
 
 $.each(pregContest, function(index, val) {
 	$("td.preguntaDato[preg-id="+val.pregunta+"]").removeClass('noContestada');
 	$("td.preguntaDato[preg-id="+val.pregunta+"]").addClass('contestada');
 });
 
+$(document).on('click', '#btn_inicia_examen', function(event) {
+	event.preventDefault();
+	cronometro();
+	$("#divBtnInicio").css('display', 'none');
+	$("#div_controles").css('display', 'inline-block');
+	var date_inicio = new Date();
+	var str_hora_inicio = ""+date_inicio.getHours()+":"+date_inicio.getMinutes()+":"+date_inicio.getSeconds();
+	$.post(base_url+'index.php/inicio/guardaHoraInicio', {hora: str_hora_inicio}, function(data, textStatus, xhr) {
+		$("#contenedorInicio").css('display', 'none');
+		$("#contenedorPreguntas").css('display', 'block');
+	});
+});
+
 $(document).on('click', '#btn_pausa', function(event) {
 	event.preventDefault();
-	pausa = true;
-	inicio_pausa = new Date();
+	//pausa = true;
+	//inicio_pausa = new Date();
 	$("#modalPausaCuest").modal("show");
 });
 
 $(document).on('click', '#btnQuitaPausa', function(event) {
 	event.preventDefault();
-	termina_pausa = new Date();
-	transcurso_pausa = (termina_pausa.getTime() - inicio_pausa.getTime() + 1000)/1000;
-	seg_dat = parseInt(('0' + Math.floor(transcurso_pausa % 60)).slice(-2));
-	min_dat = parseInt(('0' + Math.floor(transcurso_pausa / 60 % 60)).slice(-2));
-	hor_dat = parseInt(('0' + Math.floor(transcurso_pausa / 3600 % 24)).slice(-2));
-	horaFinal += hor_dat;
-	minFinal += min_dat;
-	segFinal += seg_dat;
-	finalTiempo = new Date(tiempo.getFullYear(),tiempo.getMonth(),diaFinal,horaFinal,minFinal,segFinal);
-	$("#modalPausaCuest").modal("hide");
-	pausa = false;
-	console.log(hor_dat+":"+min_dat+":"+seg_dat);
+	let folio = $("#input_folio").val();
+	let pass = $("#input_password").val();
+	let peticion = {
+		"folio" : folio,
+		"password" : pass
+	};
+	if (folio != "" && pass != "") {
+		$.ajax({
+			url: base_url+'index.php/inicio/quitaPausa',
+			type: 'POST',
+			dataType: 'json',
+			data: peticion,
+		})
+		.done(function(data) {
+			if (data.pasa == "true") {
+				// termina_pausa = new Date();
+				// transcurso_pausa = (termina_pausa.getTime() - inicio_pausa.getTime() + 1000)/1000;
+				// seg_dat = ('0' + Math.floor(transcurso_pausa % 60)).slice(-2);
+				// min_dat = ('0' + Math.floor(transcurso_pausa / 60 % 60)).slice(-2);
+				// hor_dat = ('0' + Math.floor(transcurso_pausa / 3600 % 24)).slice(-2);
+				// horaFinal += parseInt(hor_dat);
+				// minFinal += parseInt(min_dat);
+				// segFinal += parseInt(seg_dat);
+
+				// finalTiempo = new Date(tiempo.getFullYear(),tiempo.getMonth(),diaFinal,horaFinal,minFinal,segFinal);
+				// console.log(finalTiempo);
+				// horaFinal -= 4;
+				// minFinal -= 30;
+				// if (minFinal < 0) {
+				// 	minFinal += 60;
+				// 	horaFinal--;
+				// }
+				// $.post(base_url+'index.php/inicio/guardaHoraInicio', {hora: horaFinal+":"+minFinal+":"+segFinal}, function(data, textStatus, xhr) {
+				// 	$("#modalPausaCuest").modal("hide");
+				// });
+				// $("#input_folio").val("");
+				// $("#input_password").val("");
+				// pausa = false;
+				$("#modalPausaCuest").modal("hide");
+				console.log(horaFinal+":"+minFinal+":"+segFinal);
+			}else{
+				$("#errores_login2").html('<div class="alert alert-danger" role="alert">'+data.msj+'</div>');
+			}
+		})
+		.fail(function() {
+			console.log("error");
+		})
+		.always(function() {
+			console.log("complete");
+		});
+	}else{
+		$("#errores_login2").html('<div class="alert alert-warning" role="alert">Debe introducir el FolioUV y la contraseña</div>');
+	}
 });
 
 $(document).on('change', 'input[name=checkrespuesta]:checked', function(event) {
@@ -221,4 +290,3 @@ $(document).on('click', '#btn_fin', function(event) {
 	event.preventDefault();
 	window.location.href = base_url+"index.php/inicio/salir";
 });
-

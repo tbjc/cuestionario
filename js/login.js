@@ -16,7 +16,7 @@ $(document).on('click', '#btnLog', function(event) {
 		})
 		.done(function(data) {
 			if (data["pasa"] == "true") {
-				window.location.href = base_url+"index.php/inicio/instrucciones";
+				window.location.href = base_url+"index.php/inicio/preguntas";
 			}else{
 				$("#errores").html('<div class="alert alert-danger" role="alert">'+data.msj+'</div>');
 			}

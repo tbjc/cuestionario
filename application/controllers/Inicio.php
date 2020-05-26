@@ -8,6 +8,16 @@ class Inicio extends CI_Controller {
 	}
 
 	public function index(){
+		if ($this->session->userdata('id') != null) {
+			redirect('/inicio/preguntas','refresh');
+		}
+		$this->load->view('inicio_view');
+	}
+
+	public function entrar(){
+		if ($this->session->userdata('id') != null) {
+			redirect('/preguntas','refresh');
+		}
 		$this->load->view('login');
 	}
 
@@ -22,13 +32,32 @@ class Inicio extends CI_Controller {
 			$array = array(
 				'nombre' => $dato->asp_nombres." ".$dato->asp_apellido1." ".$dato->asp_apellido2,
 				'folio' => $dato->asp_folio,
-				'id' => $dato->asp_id,
+				'id' => $dato->asp_id
 			);
 			
 			$this->session->set_userdata($array);
 		}else{
 			$respuesta["pasa"] = "false";
 			$respuesta["msj"] = $respCons["msj"];
+		}
+		echo json_encode($respuesta);
+	}
+
+	public function quitaPausa(){
+		$folio = $this->input->post("folio");
+		$password = $this->input->post("password");
+		$respuesta = [];
+		if ($folio == $this->session->userdata('folio')) {
+			$respCons = $this->Model_preguntas->verificaLogin($folio,$password);
+			if ($respCons["pasa"] == "true") {
+				$respuesta["pasa"] = "true";
+			}else{
+				$respuesta["pasa"] = "false";
+				$respuesta["msj"] = $respCons["msj"];
+			}
+		}else{
+			$respuesta["pasa"] = "false";
+			$respuesta["msj"] = "FolioUV incorrecto";
 		}
 		echo json_encode($respuesta);
 	}
@@ -51,7 +80,7 @@ class Inicio extends CI_Controller {
 		if ($this->session->userdata('id') == null) {
 			redirect('/','refresh');
 		}
-		$this->load->view('instrucciones');
+		redirect('/inicio/preguntas','refresh');
 	}
 
 	public function final_examen(){
@@ -69,6 +98,7 @@ class Inicio extends CI_Controller {
 		if ($this->session->userdata('id') == null) {
 			redirect('/','refresh');
 		}
+
 		$preguntasDb = $this->Model_preguntas->cargaPreguntas();
 		$pregContest = $this->Model_preguntas->preguntasContestadas($this->session->userdata('id'));
 		$preguntas = [];
@@ -84,9 +114,11 @@ class Inicio extends CI_Controller {
 		if (count($renglon) > 0) {
 			array_push($preguntas, $renglon);
 		}
+
 		$data["preguntas"] = $preguntas;
 		$data["numPreguntas"] = count($preguntasDb);
 		$data["pregCont"] = $pregContest;
+		$data["hora_inicio"] = $this->Model_preguntas->hora_inicio($this->session->userdata('id'));
 		$this->load->view('preguntas_view',$data);
 	}
 
@@ -107,6 +139,16 @@ class Inicio extends CI_Controller {
 		echo json_encode($resp);
 	}
 
+	public function guardaHoraInicio(){
+		$hora = $this->input->post("hora");
+		$this->db->where('asp_id', $this->session->userdata('id'));
+		$this->db->update('cues_aspirantes', ["asp_hora_empezo" => $hora]);
+		echo "guardado";
+	}
+
+	public function keepsession(){
+		echo "ok";
+	}
 
 }
 

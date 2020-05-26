@@ -24,13 +24,13 @@ class Model_preguntas extends CI_Model {
 			}else{
 				$pasa = [];
 				$pasa["pasa"] = "false";
-				$pasa["msj"] = "FolioUV o Contraseña incorrectos";
+				$pasa["msj"] = "Contraseña incorrecta";
 				return $pasa;
 			}
 		}else{
 			$pasa = [];
 			$pasa["pasa"] = "false";
-			$pasa["msj"] = "FolioUV o Contraseña incorrectos";
+			$pasa["msj"] = "FolioUV incorrecto";
 			return $pasa;
 		}
 	}
@@ -91,6 +91,11 @@ class Model_preguntas extends CI_Model {
 		];
 		$this->db->insert('cues_respuesta_usuario', $objeto);
 		return $objeto;
+	}
+
+	public function hora_inicio($id){
+		$this->db->where('asp_id', $id);
+		return $this->db->get('cues_aspirantes')->row()->asp_hora_empezo;
 	}
 
 }
