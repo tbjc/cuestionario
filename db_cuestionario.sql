@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-05-2020 a las 00:44:20
+-- Tiempo de generación: 26-05-2020 a las 17:01:29
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.4
 
@@ -35,15 +35,16 @@ CREATE TABLE `cues_aspirantes` (
   `asp_apellido1` longtext DEFAULT NULL,
   `asp_apellido2` longtext DEFAULT NULL,
   `asp_clave_ceneval` varchar(45) DEFAULT NULL,
-  `asp_fin_examen` varchar(45) DEFAULT 'N'
+  `asp_fin_examen` varchar(45) DEFAULT 'N',
+  `asp_hora_empezo` time DEFAULT '00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `cues_aspirantes`
 --
 
-INSERT INTO `cues_aspirantes` (`asp_id`, `asp_folio`, `asp_password`, `asp_nombres`, `asp_apellido1`, `asp_apellido2`, `asp_clave_ceneval`, `asp_fin_examen`) VALUES
-(1, 'LC2011111', 'asasas', 'aaa', 'aaa', 'aaa', 'aaa', 'N');
+INSERT INTO `cues_aspirantes` (`asp_id`, `asp_folio`, `asp_password`, `asp_nombres`, `asp_apellido1`, `asp_apellido2`, `asp_clave_ceneval`, `asp_fin_examen`, `asp_hora_empezo`) VALUES
+(1, 'LC2011111', 'asasas', 'aaa', 'aaa', 'aaa', 'aaa', 'N', '00:00:00');
 
 -- --------------------------------------------------------
 
@@ -156,18 +157,6 @@ CREATE TABLE `cues_respuesta_usuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Volcado de datos para la tabla `cues_respuesta_usuario`
---
-
-INSERT INTO `cues_respuesta_usuario` (`resp_usu_id`, `resp_usu_preg`, `resp_usu_resp`, `resp_usu_aspirante`) VALUES
-(20, 9, 34, 1),
-(21, 8, 30, 1),
-(22, 10, 38, 1),
-(23, 11, 44, 1),
-(26, 2, 7, 1),
-(27, 1, 3, 1);
-
---
 -- Índices para tablas volcadas
 --
 
@@ -221,7 +210,7 @@ ALTER TABLE `cues_repuesta`
 -- AUTO_INCREMENT de la tabla `cues_respuesta_usuario`
 --
 ALTER TABLE `cues_respuesta_usuario`
-  MODIFY `resp_usu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `resp_usu_id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
