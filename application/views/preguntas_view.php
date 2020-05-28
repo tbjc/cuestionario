@@ -189,11 +189,11 @@
         <h4 class="modal-title" style="color: white;">Examen Pausado</h4>
       </div>
       <div class="modal-body" id="">
-        <h4 style="text-align: center;">Para poder continuar con el examen es necesario que use su FolioUV y Contraseña</h4>
+        <h4 style="text-align: center;">Para poder continuar con el examen es necesario que use su usuario y Contraseña</h4>
         <div class="">
           <div class="form-group">
             <div class="input-group">
-              <span class="input-group-addon" style="font-weight: bold;">FolioUV</span>
+              <span class="input-group-addon" style="font-weight: bold;">Cuenta de Usuario</span>
               <input type="text" id="input_folio" class="form-control" maxlength="9">
             </div>
           </div>
