@@ -33,7 +33,7 @@
 								<div style="text-align: center;">Inicio de Sesion</div>
 								<div class="form-group" style="margin-top: 15px;">
 									<div class="input-group">
-										<span class="input-group-addon" style="font-weight: bold;">FolioUV</span>
+										<span class="input-group-addon" style="font-weight: bold;">Cuenta de Usuario</span>
 										<input type="text" id="input_folio" class="form-control" maxlength="9">
 									</div>
 								</div>

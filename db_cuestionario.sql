@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-05-2020 a las 17:01:29
+-- Tiempo de generación: 28-05-2020 a las 20:31:28
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.4
 
@@ -36,15 +36,16 @@ CREATE TABLE `cues_aspirantes` (
   `asp_apellido2` longtext DEFAULT NULL,
   `asp_clave_ceneval` varchar(45) DEFAULT NULL,
   `asp_fin_examen` varchar(45) DEFAULT 'N',
-  `asp_hora_empezo` time DEFAULT '00:00:00'
+  `asp_hora_empezo` time DEFAULT '00:00:00',
+  `asp_esta_pausa` varchar(2) DEFAULT 'N'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `cues_aspirantes`
 --
 
-INSERT INTO `cues_aspirantes` (`asp_id`, `asp_folio`, `asp_password`, `asp_nombres`, `asp_apellido1`, `asp_apellido2`, `asp_clave_ceneval`, `asp_fin_examen`, `asp_hora_empezo`) VALUES
-(1, 'LC2011111', 'asasas', 'aaa', 'aaa', 'aaa', 'aaa', 'N', '00:00:00');
+INSERT INTO `cues_aspirantes` (`asp_id`, `asp_folio`, `asp_password`, `asp_nombres`, `asp_apellido1`, `asp_apellido2`, `asp_clave_ceneval`, `asp_fin_examen`, `asp_hora_empezo`, `asp_esta_pausa`) VALUES
+(1, 'LC2011111', 'asasas', 'aaa', 'aaa', 'aaa', 'aaa', 'N', '00:00:00', 'N');
 
 -- --------------------------------------------------------
 

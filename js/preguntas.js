@@ -51,6 +51,10 @@ if (hora_inicio != '00:00:00') {
 	cronometro();
 }
 
+if (estadoP == "S") {
+	$("#modalPausaCuest").modal("show");
+}
+
 function cronometro(){
 	setCronometro = setInterval(function(){
 		if (!pausa) {
@@ -83,6 +87,26 @@ $.each(pregContest, function(index, val) {
 
 $(document).on('click', '#btn_inicia_examen', function(event) {
 	event.preventDefault();
+	tiempo = new Date();
+	horaFinal = tiempo.getHours() + 4;
+	minFinal = tiempo.getMinutes() + 30;
+	segFinal = tiempo.getSeconds();
+	diaFinal = tiempo.getDate();
+
+	if (minFinal > 59 ) {
+		minFinal = minFinal - 60;
+		horaFinal++;
+	}
+
+	if (horaFinal > 23) {
+		horaFinal -= 24;
+		diaFinal++;
+	}
+
+	inicio_pausa;
+	termina_pausa;
+
+	finalTiempo = new Date(tiempo.getFullYear(),tiempo.getMonth(),diaFinal,horaFinal,minFinal,segFinal);
 	cronometro();
 	$("#divBtnInicio").css('display', 'none');
 	$("#div_controles").css('display', 'inline-block');
@@ -96,9 +120,16 @@ $(document).on('click', '#btn_inicia_examen', function(event) {
 
 $(document).on('click', '#btn_pausa', function(event) {
 	event.preventDefault();
+	let vid = document.getElementById("videoP");
+	vid.pause();
+	$.post(base_url+'index.php/inicio/guardaPausa', {estado: 'S'}, function(data, textStatus, xhr) {
+		if (data == "guardado") {
+			$("#modalPausaCuest").modal("show");
+		}
+	});
 	//pausa = true;
 	//inicio_pausa = new Date();
-	$("#modalPausaCuest").modal("show");
+	
 });
 
 $(document).on('click', '#btnQuitaPausa', function(event) {
@@ -118,31 +149,14 @@ $(document).on('click', '#btnQuitaPausa', function(event) {
 		})
 		.done(function(data) {
 			if (data.pasa == "true") {
-				// termina_pausa = new Date();
-				// transcurso_pausa = (termina_pausa.getTime() - inicio_pausa.getTime() + 1000)/1000;
-				// seg_dat = ('0' + Math.floor(transcurso_pausa % 60)).slice(-2);
-				// min_dat = ('0' + Math.floor(transcurso_pausa / 60 % 60)).slice(-2);
-				// hor_dat = ('0' + Math.floor(transcurso_pausa / 3600 % 24)).slice(-2);
-				// horaFinal += parseInt(hor_dat);
-				// minFinal += parseInt(min_dat);
-				// segFinal += parseInt(seg_dat);
-
-				// finalTiempo = new Date(tiempo.getFullYear(),tiempo.getMonth(),diaFinal,horaFinal,minFinal,segFinal);
-				// console.log(finalTiempo);
-				// horaFinal -= 4;
-				// minFinal -= 30;
-				// if (minFinal < 0) {
-				// 	minFinal += 60;
-				// 	horaFinal--;
-				// }
-				// $.post(base_url+'index.php/inicio/guardaHoraInicio', {hora: horaFinal+":"+minFinal+":"+segFinal}, function(data, textStatus, xhr) {
-				// 	$("#modalPausaCuest").modal("hide");
-				// });
-				// $("#input_folio").val("");
-				// $("#input_password").val("");
-				// pausa = false;
-				$("#modalPausaCuest").modal("hide");
-				console.log(horaFinal+":"+minFinal+":"+segFinal);
+				$.post(base_url+'index.php/inicio/guardaPausa', {estado: 'N'}, function(data, textStatus, xhr) {
+					if (data == "guardado") {
+						$("#modalPausaCuest").modal("hide");
+						console.log(horaFinal+":"+minFinal+":"+segFinal);
+					}
+				});
+				
+				
 			}else{
 				$("#errores_login2").html('<div class="alert alert-danger" role="alert">'+data.msj+'</div>');
 			}
@@ -172,7 +186,7 @@ $(document).on('click', '.btn-resp', function(event) {
 	event.preventDefault();
 
 	let valor = $(this).attr('valor');
-	$("#modalVideoResp").html('<video src="./videos/exam1/resp1/rsp'+valor+'.mp4" width="100%" style="" autoplay controls> </video>');
+	$("#modalVideoResp").html('<video src="./videos/exam1/resp1/rsp'+valor+'.mp4" width="100%" style="" controls> </video>');
 	let vid = document.getElementById("videoP");
 	vid.pause();
 	$("#modalRespuesta").modal("show");
@@ -190,7 +204,7 @@ function seleccionaPregunta(id){
 		data: {id: id},
 	})
 	.done(function(data) {
-		$("#txtPregunta").html("Pregunta "+data.preg_numero);
+		$("#txtPregunta").html("Pregunta "+data.preg_numero+" <button class='btn btn-info' data-toggle='collapse' data-target='#divPregTxt'>Ver Pregunta</button>");
 		let opcionesResp = '';
 		$.each(data.respuestas, function(index, val) {
 			opcionesResp += '<li class="list-group-item liOption" valor-opt="'+val.resp_id+'">';
@@ -198,7 +212,9 @@ function seleccionaPregunta(id){
 			opcionesResp += '<label> &nbsp;&nbsp;Opción '+val.resp_opcion+'</label> <button type="button" class="btn btn-info btn-resp" valor="'+val.resp_id+'"><span class="glyphicon glyphicon-eye-open"></span></button>'
 			opcionesResp += '</li>';
 		});
-		$("#contentVideo").html('<video id="videoP" src="./videos/exam'+data.preg_cuestionario+'/videop'+data.preg_numero+'.mp4" width="100%" autoplay controls style="border: 1px solid black; max-height: 500px;"></video>');
+		$("#divPregTxt").html(""+data.preg_pregunta);
+		$("#divPregTxt").collapse("hide");
+		$("#contentVideo").html('<video id="videoP" src="./videos/exam'+data.preg_cuestionario+'/videop'+data.preg_numero+'.mp4" width="100%" controls style="border: 1px solid black; max-height: 500px;"></video>');
 		$("#listaOpcionesDatos").html(opcionesResp);
 		$(".preguntaDato").each(function(index, el) {
 			$(this).removeClass('actual');

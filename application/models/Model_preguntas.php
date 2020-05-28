@@ -98,6 +98,11 @@ class Model_preguntas extends CI_Model {
 		return $this->db->get('cues_aspirantes')->row()->asp_hora_empezo;
 	}
 
+	public function estado_pausa($id){
+		$this->db->where('asp_id', $id);
+		return $this->db->get('cues_aspirantes')->row()->asp_esta_pausa;
+	}
+
 }
 
 /* End of file Model_preguntas.php */

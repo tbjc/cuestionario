@@ -19,11 +19,11 @@
 <body>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-6 col-md-offset-3" id="cuerpo" style="text-align: center;">
-				<h1>Nombre_sistema</h1>
+			<div class="col-md-10 col-md-offset-1" id="cuerpo" style="text-align: center;">
 				<img src="./img/logo-simple.png">
-				<h2>Sistema de Ingreso a la UV con el uso de lenguaje de señas mexicana</h2>
-				<h2>Bienvenido</h2>
+				<h2 style="font-weight: bold; margin-top: 100px;">Examen de Ingeso a la UV <br>Con el uso de Lenguaje de Señas Mexicana</h2>
+				<img src="./img/índice.jpg" style="width: 100%;">
+				<h2 style="font-weight: bold; margin-top: 30px;">B i e n v e n i d o</h2>
 				<a href="<?= base_url() ?>index.php/inicio/entrar" class="btn btn-success btn-lg">Ingresar</a>
 			</div>
 		</div>

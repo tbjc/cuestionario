@@ -47,7 +47,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-default" style="border-bottom: 1px solid #aaa">
+<nav class="navbar navbar-default navbar-fixed-top" style="border-bottom: 1px solid #aaa">
   <div class="container-fluid">
     <div class="navbar-form navbar-left">
       <div class="form-group" style="padding-right: 5px;">
@@ -68,15 +68,18 @@
   </div>
 </nav>
 
-<div class="container" id="contenedorInicio">
-  <h1 style="text-align: center;">Para iniciar el examen presione el botón "Iniciar"</h1>
+<div class="container" id="contenedorInicio" style="text-align: center; margin-top: 70px;">
+  <h2 style="text-align: center; font-weight: bold;">Instrucciones Generales</h2>
+  <video controls src="./videos/videoInicio.mp4" style="max-width: 500px; margin-top: 30px;"></video>
+  <h2 style="text-align: center; font-weight: bold;">Para iniciar el examen presione el botón "Iniciar"</h1>
 </div>
   
-<div class="container" id="contenedorPreguntas" style="display: none;">
+<div class="container" id="contenedorPreguntas" style="display: none; margin-top: 70px;">
   <div class="row">
     <div class="col-md-8">
       <div>
         <h2 id="txtPregunta"></h2>
+        <div id="divPregTxt" class="collapse"></div>
         <div id="contentVideo">
         </div>
       </div>
@@ -235,6 +238,7 @@
 
 <script type="text/javascript">
   var hora_inicio = '<?= $hora_inicio ?>';
+  var estadoP = '<?= $estadoP ?>';
   var totalPreg = <?= $numPreguntas ?>;
   var primerPreg = <?= $preguntas[0][0]["id"] ?>;
   var base_url = "<?= base_url() ?>";

@@ -118,6 +118,7 @@ class Inicio extends CI_Controller {
 		$data["preguntas"] = $preguntas;
 		$data["numPreguntas"] = count($preguntasDb);
 		$data["pregCont"] = $pregContest;
+		$data["estadoP"] = $this->Model_preguntas->estado_pausa($this->session->userdata('id'));
 		$data["hora_inicio"] = $this->Model_preguntas->hora_inicio($this->session->userdata('id'));
 		$this->load->view('preguntas_view',$data);
 	}
@@ -143,6 +144,13 @@ class Inicio extends CI_Controller {
 		$hora = $this->input->post("hora");
 		$this->db->where('asp_id', $this->session->userdata('id'));
 		$this->db->update('cues_aspirantes', ["asp_hora_empezo" => $hora]);
+		echo "guardado";
+	}
+
+	public function guardaPausa(){
+		$estado = $this->input->post("estado");
+		$this->db->where('asp_id', $this->session->userdata('id'));
+		$this->db->update('cues_aspirantes', ["asp_esta_pausa" => $estado]);
 		echo "guardado";
 	}
 
