@@ -43,6 +43,12 @@
     table#tablePregunta tbody tr td.contestada{
       background: #00bc91;
     }
+
+    #btnSegLeyendo{
+      color: #2196f3;
+      font-weight: bold;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -79,7 +85,7 @@
     <div class="col-md-8">
       <div>
         <h2 id="txtPregunta"></h2>
-        <div id="divPregTxt" class="collapse"></div>
+        <div id="divPregTxt"></div>
         <div id="contentVideo">
         </div>
       </div>

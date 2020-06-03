@@ -1,4 +1,6 @@
 
+var pregunta = "";
+
 seleccionaPregunta(primerPreg);
 
 var guardandoRespuesta = false;
@@ -78,7 +80,26 @@ function terminaExamen(){
 	window.location.href = base_url+"index.php/inicio/salir";
 }
 
+function pintaPregunta(textoPregunta){
+	if (textoPregunta.length > 50) {
+		let preguntaRecortada = textoPregunta.substr(0, 50);
+		$("#divPregTxt").html("<br>"+preguntaRecortada+"... <spam id='btnSegLeyendo' preg-edo='contraido'>Seguir leyendo</spam><br><br>");
+		pregunta = textoPregunta;
+	}else{
+		$("#divPregTxt").html("<br>"+textoPregunta+"<br><br>");
+		pregunta = textoPregunta;
+	}
+}
 
+$(document).on('click', '#btnSegLeyendo', function(event) {
+	event.preventDefault();
+	if ($(this).attr('preg-edo')=="contraido") {
+		$("#divPregTxt").html("<br>"+pregunta+"<br><spam id='btnSegLeyendo' preg-edo='no_contraido'>Mostrar Menos</spam><br>");
+	}else{
+		let preguntaRecortada = pregunta.substr(0, 50);
+		$("#divPregTxt").html("<br>"+preguntaRecortada+"... <spam id='btnSegLeyendo' preg-edo='contraido'>Seguir leyendo</spam><br><br>");
+	}
+});
 
 $.each(pregContest, function(index, val) {
 	$("td.preguntaDato[preg-id="+val.pregunta+"]").removeClass('noContestada');
@@ -204,7 +225,7 @@ function seleccionaPregunta(id){
 		data: {id: id},
 	})
 	.done(function(data) {
-		$("#txtPregunta").html("Pregunta "+data.preg_numero+" <button class='btn btn-info' data-toggle='collapse' data-target='#divPregTxt'>Ver Pregunta</button>");
+		$("#txtPregunta").html("Pregunta "+data.preg_numero+"");
 		let opcionesResp = '';
 		$.each(data.respuestas, function(index, val) {
 			opcionesResp += '<li class="list-group-item liOption" valor-opt="'+val.resp_id+'">';
@@ -212,8 +233,8 @@ function seleccionaPregunta(id){
 			opcionesResp += '<label> &nbsp;&nbsp;Opción '+val.resp_opcion+'</label> <button type="button" class="btn btn-info btn-resp" valor="'+val.resp_id+'"><span class="glyphicon glyphicon-eye-open"></span></button>'
 			opcionesResp += '</li>';
 		});
-		$("#divPregTxt").html(""+data.preg_pregunta);
-		$("#divPregTxt").collapse("hide");
+		//$("#divPregTxt").html("<br>"+data.preg_pregunta+"<br><br>");
+		pintaPregunta(data.preg_pregunta);
 		$("#contentVideo").html('<video id="videoP" src="./videos/exam'+data.preg_cuestionario+'/videop'+data.preg_numero+'.mp4" width="100%" controls style="border: 1px solid black; max-height: 500px;"></video>');
 		$("#listaOpcionesDatos").html(opcionesResp);
 		$(".preguntaDato").each(function(index, el) {
