@@ -1,4 +1,3 @@
-
 var pregunta = "";
 
 seleccionaPregunta(primerPreg);
@@ -47,7 +46,7 @@ if (hora_inicio != '00:00:00') {
 	segFinal = parseInt(array_hora[2]);
 	finalTiempo = new Date(tiempo.getFullYear(),tiempo.getMonth(),diaFinal,horaFinal,minFinal,segFinal);
 	$("#divBtnInicio").css('display', 'none');
-	$("#div_controles").css('display', 'inline-block');
+	$(".div_controles").css('display', 'inline-block');
 	$("#contenedorInicio").css('display', 'none');
 	$("#contenedorPreguntas").css('display', 'block');
 	cronometro();
@@ -81,12 +80,12 @@ function terminaExamen(){
 }
 
 function pintaPregunta(textoPregunta){
-	if (textoPregunta.length > 50) {
-		let preguntaRecortada = textoPregunta.substr(0, 50);
-		$("#divPregTxt").html("<br>"+preguntaRecortada+"... <spam id='btnSegLeyendo' preg-edo='contraido'>Seguir leyendo</spam><br><br>");
+	if (textoPregunta.length > 200) {
+		let preguntaRecortada = textoPregunta.substr(0, 200);
+		$("#divPregTxt").html(""+preguntaRecortada+"... <spam id='btnSegLeyendo' preg-edo='contraido'>Seguir leyendo</spam><br><br>");
 		pregunta = textoPregunta;
 	}else{
-		$("#divPregTxt").html("<br>"+textoPregunta+"<br><br>");
+		$("#divPregTxt").html(""+textoPregunta+"<br><br>");
 		pregunta = textoPregunta;
 	}
 }
@@ -94,10 +93,10 @@ function pintaPregunta(textoPregunta){
 $(document).on('click', '#btnSegLeyendo', function(event) {
 	event.preventDefault();
 	if ($(this).attr('preg-edo')=="contraido") {
-		$("#divPregTxt").html("<br>"+pregunta+"<br><spam id='btnSegLeyendo' preg-edo='no_contraido'>Mostrar Menos</spam><br>");
+		$("#divPregTxt").html(""+pregunta+"<br><spam id='btnSegLeyendo' preg-edo='no_contraido'>Mostrar Menos</spam><br>");
 	}else{
-		let preguntaRecortada = pregunta.substr(0, 50);
-		$("#divPregTxt").html("<br>"+preguntaRecortada+"... <spam id='btnSegLeyendo' preg-edo='contraido'>Seguir leyendo</spam><br><br>");
+		let preguntaRecortada = pregunta.substr(0, 200);
+		$("#divPregTxt").html(""+preguntaRecortada+"... <spam id='btnSegLeyendo' preg-edo='contraido'>Seguir leyendo</spam><br><br>");
 	}
 });
 
@@ -130,7 +129,7 @@ $(document).on('click', '#btn_inicia_examen', function(event) {
 	finalTiempo = new Date(tiempo.getFullYear(),tiempo.getMonth(),diaFinal,horaFinal,minFinal,segFinal);
 	cronometro();
 	$("#divBtnInicio").css('display', 'none');
-	$("#div_controles").css('display', 'inline-block');
+	$(".div_controles").css('display', 'inline-block');
 	var date_inicio = new Date();
 	var str_hora_inicio = ""+date_inicio.getHours()+":"+date_inicio.getMinutes()+":"+date_inicio.getSeconds();
 	$.post(base_url+'index.php/inicio/guardaHoraInicio', {hora: str_hora_inicio}, function(data, textStatus, xhr) {
@@ -225,13 +224,14 @@ function seleccionaPregunta(id){
 		data: {id: id},
 	})
 	.done(function(data) {
-		$("#txtPregunta").html("Pregunta "+data.preg_numero+"");
+		 $("#txtPregunta").html("Pregunta: "+ data.preg_numero);
 		let opcionesResp = '';
 		$.each(data.respuestas, function(index, val) {
-			opcionesResp += '<li class="list-group-item liOption" valor-opt="'+val.resp_id+'">';
-			opcionesResp +=	'<input type="radio" class="opcResp" name="checkrespuesta" valor="'+val.resp_id+'">'
-			opcionesResp += '<label> &nbsp;&nbsp;Opción '+val.resp_opcion+'</label> <button type="button" class="btn btn-info btn-resp" valor="'+val.resp_id+'"><span class="glyphicon glyphicon-eye-open"></span></button>'
-			opcionesResp += '</li>';
+      		opcionesResp += '<li class="list-group-item liOption" valor-opt="'+val.resp_id+'">';
+      		opcionesResp += '<input type="radio" class="opcResp" name="checkrespuesta" valor="'+val.resp_id+'">'
+      		opcionesResp += '<label> &nbsp;&nbsp;'+val.resp_opcion+'&nbsp;&nbsp;&nbsp;&nbsp;' +val.resp_texto+'</label> <button type="button" class="btn btn-info btn-resp" style="float: right;" valor="'+val.resp_id+'"><span class="glyphicon glyphicon-eye-open"></span></button>'
+      		opcionesResp += '</li>';
+
 		});
 		//$("#divPregTxt").html("<br>"+data.preg_pregunta+"<br><br>");
 		pintaPregunta(data.preg_pregunta);

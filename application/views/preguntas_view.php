@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="./css/bootstrap.min.css">
   <link rel="icon" type="text/css" href="./favicon.ico">
+  <link media="all" href="./css/math.css" type="text/css" rel="stylesheet">y
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="./js/bootstrap.min.js"></script>
   <style type="text/css">
@@ -27,6 +28,13 @@
       margin-left: 20px;
       margin-right: 20px;
     }
+
+    #divPregTxt{
+      font-size: 20px;
+      text-align: justify;
+      color: #045E8C;
+    }
+
 
     table#tablePregunta tbody tr td{
       padding: 3px;
@@ -55,7 +63,22 @@
 
 <nav class="navbar navbar-default navbar-fixed-top" style="border-bottom: 1px solid #aaa">
   <div class="container-fluid">
-    <div class="navbar-form navbar-left">
+    <div class="row" style="margin-top: 8px;">
+      <div class="col-md-4">
+        <label><?= $this->session->userdata('nombre'); ?></label><label id="relog_dato">00:00:00</label>
+      </div>
+      <div class="col-md-4" id="divBtnInicio" style="text-align: center">
+        <button class="btn btn-primary" type="button" id="btn_inicia_examen"><span class="glyphicon glyphicon-play"></span> Iniciar</button>
+      </div>
+      <div class="col-md-4 div_controles" style="text-align: center; display: none;">
+        <button class="btn btn-warning" type="button" id="btn_pausa" style="align:center"><span class="glyphicon glyphicon-pause"></span>Pausar</button>
+      </div>
+      <div class="col-md-4 div_controles" style="text-align: right; display: none;">
+        <button class="btn btn-success" type="button" id="btnFinalizar">Terminar</button>
+      </div>
+
+    </div>
+    <!--<div class="navbar-form navbar-left">
       <div class="form-group" style="padding-right: 5px;">
         <label><?= $this->session->userdata('nombre'); ?></label>
       </div>
@@ -66,11 +89,13 @@
         <label id="relog_dato">00:00:00</label>
       </div>
       <div class="form-group" id="div_controles" style="display: none;">
-        <button class="btn btn-warning" type="button" id="btn_pausa"><span class="glyphicon glyphicon-pause"></span>Pausar</button>
-        <button class="btn btn-success" type="button" id="btnFinalizar">Terminar</button>
+        <button class="btn btn-warning" type="button" id="btn_pausa" style="align:center"><span class="glyphicon glyphicon-pause"></span>Pausar</button>
+        
       </div>
-      
     </div>
+    <div class="navbar-form navbar-right">
+      <button class="btn btn-success" type="button" id="btnFinalizar">Terminar</button>
+    </div>-->
   </div>
 </nav>
 
@@ -125,7 +150,7 @@
   <div class="row">
     <div class="col-md-8">
       <div id="divPreguntas">
-        <h2>Selecciona la respuesta correcta</h2>
+        <h2>Opciones de respuesta</h2>
         <ul class="list-group" id="listaOpcionesDatos">
         </ul>
       </div>
@@ -213,7 +238,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" id="btnQuitaPausa" class="btn btn-success">Continuar Cuestionario</button>
+        <button type="button" id="btnQuitaPausa" class="btn btn-success">Continuar Examen</button>
       </div>
     </div>
   </div>
@@ -253,3 +278,4 @@
 <script src="./js/preguntas.js"></script>
 </body>
 </html>
+

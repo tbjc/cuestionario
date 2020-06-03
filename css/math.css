@@ -1,0 +1,374 @@
+/* ------------------------------------------ */
+/*     ENIG. PERIODIC TABLE OF THE ELEMENTS   */
+/*         www.periodni.com - 8-2014          */
+/* ------------------------------------------ */
+
+/*    RESET     */
+/*==============*/
+/* Global reset of paddings and margins for all HTML elements */ 
+/* based on  Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/) */
+
+
+
+/* -------------------------------- */
+/* Special for Math and Chemistry */
+.eq-l, .eq-c, .eq-tab {
+	line-height: 1.4;
+	padding: 0.25em 0.5em;
+	font-size: 1.1em;
+}
+.eq-l {text-align: left;}
+.eq-c {text-align: center;}
+
+.eq-c  i {
+	letter-spacing: 1px;
+}
+.eq-tab {
+	padding-left: 50px;
+	text-align: left;
+}
+.dblarrow {
+	font-size: 125%;
+	top: -0.4ex;
+	margin: 0 2px;
+}
+.dblarrow:after {
+	content:"\2190"; /* &larrow; */
+	position: absolute;
+	left: 0;
+	top: 0.5ex;
+}
+
+/* new equation template */ 
+.eqleft {text-align: left;}
+.eqcenter {text-align: center;}
+.eqright {text-align: right;}
+
+.eqrow {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+.eqrow:before, .eqrow:after {
+	content: " ";
+	display: block;
+}
+.eqrow:after {clear: both;}
+.eqnum, .eq16, .eqbody {
+	position: relative;
+	padding: 1em 0.5em;
+	margin: 0;
+	font-size: 1.05em;
+	line-height: 1.4;
+	float: left;
+}
+.eqnum {width: 8%;}
+.eq16 {width: 16%;}
+.eqbody {width: 84%;}
+
+/* ------------------------------ */
+/* specific css 4 CHEM/MATH PAGES */
+/* ------------------------------ */
+
+.eqweb .ycols6 {
+	padding: 2px;
+	border-left: 2px solid #fff;
+	border-top: 2px solid #fff;
+}
+.eqweb {
+	margin-top: 1em;
+	background: #efefef;
+	border-bottom: 1px solid #0cc;
+}
+.eqweb h4 {
+	width: 100%;
+	background: #ddd;
+	box-shadow: 2px 2px 2px #888;
+	text-align: center;
+	margin: 0;
+	padding: 3px;
+}
+.eqweb  pre,
+.eqweb  .kod {
+	padding: 10px;
+}
+.eqweb  table {
+	height: 100%;
+	border-bottom: 1px solid #0cc;
+}
+
+.eq-final {
+	padding: 10px;
+	text-align: center;
+	width: 70%;
+	margin: auto;
+	background: #fff;
+	border: 1px solid #0cc;
+}
+
+
+/* ----------------------- */
+/*        Razlomci         */
+
+.fraction {
+	display: inline-block;
+	vertical-align: middle; 
+	margin: 0 0.2em 0.4ex;
+	text-align: center;
+}
+.fraction > span { 
+	display: block; 
+	padding-top: 0.15em;
+}
+.fraction span.fdn {border-top: thin solid black;}
+.fraction span.bar {display: none;}
+
+
+/* ----------------------- */
+/*   Oksidacijski brojevi  */
+
+.sy, .sy-r, .sy-g, .sy-b, .sy-bI, .syI {
+    position: relative;
+    text-align: center;
+}
+.syI, .sy-bI {
+    padding-left: 0.14em;
+	padding-right: 0.18em;
+}
+.sy-r {color: #f00;}
+.sy-g {color: #4f8c4f;}
+.sy-b, .sy-bI {color: #00f;}
+.oxbr, .oncapital, .onsmall  {
+	position: absolute;
+	top: -1em;
+	left: 0px;
+	width: 100%;
+	font-size: 0.60em;
+	letter-spacing: 0;
+	text-align: center;
+}
+.onsmall  {
+	top: -0.7em;
+}
+
+
+/* ----------------------- */
+/*    Limit of function    */
+
+.limes {
+	display: inline-block;
+	margin: 0 0.2em;
+	vertical-align: middle; 
+	text-align: center;
+}
+.limes > span { 
+	display: block;
+	margin:-0.5ex auto;
+}
+
+.limes span.numup, 
+.limes span.overdn {
+	font-size: 70%;
+}
+
+
+/* ---------------------- */
+/*      Strelice          */
+
+.rarrow {
+	position: relative;
+	font-size: 125%;
+	font-family: serif;
+	top: -0.5ex;
+	margin: 0px 2px;
+}
+.larrow {
+	position: absolute;
+	left: 0px;
+	top: 0.8ex;
+}
+
+
+/* ---------------------- */
+/*         Suma          */
+
+.intsuma {
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
+}
+.intsuma > span {
+	display: block;
+	font-size: 70%;
+}
+.intsuma .lim-up {margin-bottom: -1.0ex;}
+.intsuma .lim {margin-top: -0.5ex;}/**/
+.intsuma .sum {font-size: 1.5em;font-weight:lighter;}
+.intsuma .sum-frac {font-size: 1.5em;font-weight:100;}
+
+
+/* ----------------------- */
+/*         Korijen         */
+
+.radical {
+	font-size: 1.6em;
+	vertical-align: middle;
+}
+.n-root {
+	position: absolute;
+	top: -0.333em;
+	left: 0.333em;
+	font-size: 45%;
+}
+.radicand { 
+	padding: 0.25em 0.25em;
+	border-top: thin black solid;
+}
+
+
+
+/* ------------------------ */
+/*          MEDIA           */
+/* ------------------------ */
+
+/* --- TABLET --- */
+@media only screen and (max-width: 800px) {
+
+	/*.ycols1,
+	.ycols2,
+	.ycols3,
+	.ycols4,
+	.ycols5,
+	.ycols6,
+	.ycols7,
+	.ycols8,
+	.ycols9,
+	.ycols10,
+	.ycols11,
+	.ycols12 {width: 100%;}*/
+	[class^="ycols"] {
+		width: 100%;
+	}
+
+	.fix1 {width: 8.33333% !important;}
+	.fix2 {width: 16.66667% !important;}
+	.fix3 {width: 25% !important;}
+	.fix4 {width: 33.33333% !important;}
+	.fix5 {width: 41.66667% !important;}
+	.fix6 {width: 50% !important;}
+	.fix7 {width: 58.33333% !important;}
+	.fix8 {width: 66.66667% !important;}
+	.fix9 {width: 75% !important;}
+	.fix10 {width: 83.33333% !important;}
+	.fix11 {width: 91.66667% !important;}
+	.fix12 {width: 100% !important;}
+
+	body {
+		/* 87.5% = 14px   93.75% = 15px   100% = 16px */
+		font-size: 100%;
+	}
+
+	.entity td:nth-child(1) {
+		height: auto;
+		font-size: 1em;
+	}
+	
+	.mobhide {display: none;}
+	.mobonly {
+		display: block;
+		font-size: 1rem;
+	}
+	
+	#ebody {margin: auto;}
+	#rightnav {font-size: 1rem;}
+	
+	.bottnav li  {width: 32.5%;}
+	.bottomenu div + div {padding-top: 2em;}
+	
+	#gsearch {
+		position: relative;
+		display: table;
+		float: none;
+		top: auto;
+		right: auto;
+		margin: 10px auto;
+	}
+
+	.googleup, .googledown {
+		position: relative;
+		width: 100%;
+		height: auto;
+		top: 0;
+		left: 0;
+		text-align: center;
+		margin: 15px 0;
+	}
+	.cglogo  {text-align: center;}
+	.cglogo  img {float: none;}	
+	.h1-logo {
+		display: block;
+		font-size: 1.75em;
+		padding: 0 0 10px 0;
+		text-align: center;
+	}	
+	h1 {font-size: 1.5em;}
+	h2 {font-size: 1.2em;}
+	h3 {font-size: 1em;}
+
+}
+
+
+/* --- MOBITEL STYLES --- */
+@media only screen and (max-width: 485px) {
+
+	/*
+	.tabhide {display: none;}
+	.tabshow {display: block;}
+	.mobhide {display: none;}
+	.mobonly {display: block;}
+	*/	
+	.img-l, .img-r {
+		text-align: center !important;
+		float: none !important;
+	}
+	#rightnav {
+		position: relative;
+		float: right;
+	}
+	#rightnav a {padding: 0.25em 0.25em;}
+
+}
+
+
+/* --- PRINT STYLES --- */
+@media print {
+	.noprint {display: none !important;}
+	.print-only {display: block !important;}
+
+	#gsearch, .googleup, .googledown, .bottomenu, .mobonly {
+		display: none;
+	}
+	#ebody {margin: auto;}
+	
+	pre, blockquote {
+		border: 1px solid #999999;
+		page-break-inside: avoid;
+	}
+
+	thead {display: table-header-group;}
+
+	tr, img {
+		page-break-inside: avoid;
+	}
+	
+	img {max-width: 100% !important;}
+	
+	p, h2, h3 {
+		orphans: 3;
+		widows: 3;
+	}
+
+	h2, h3 {
+		page-break-after: avoid;
+	}
+}
