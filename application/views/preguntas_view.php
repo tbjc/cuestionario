@@ -7,7 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="./css/bootstrap.min.css">
   <link rel="icon" type="text/css" href="./favicon.ico">
-  <link media="all" href="./css/math.css" type="text/css" rel="stylesheet">y
+  <link media="all" href="./css/math.css" type="text/css" rel="stylesheet">
+  <link media="all" href="./css/radiobutton.css" type="text/css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="./js/bootstrap.min.js"></script>
   <style type="text/css">
@@ -24,32 +25,52 @@
     }
 
     #relog_dato{
-      font-size: 20px;
+      font-size: 30px;
       margin-left: 20px;
       margin-right: 20px;
+      background:#777;
+      color:#eee;
+      font-weight:bold;
+      width:100%;      
     }
+
+    #nombreusuario{
+      font-size: 16px;
+      color:#eee;
+      font-weight:bold;
+      width:100%;      
+    }
+
+    .div_nombreusuario{
+      display: block;
+      background:#494E6B;
+    }
+
 
     #divPregTxt{
       font-size: 20px;
       text-align: justify;
-      color: #045E8C;
+      color: #192B42;
     }
 
+   .liOption.active{
+    background: #288C93;
+   }
 
     table#tablePregunta tbody tr td{
       padding: 3px;
       border: 1px solid black;
-      background: #59a533;
+      background: #98878F;
       color: white;
       font-weight: bold;
     }
 
     table#tablePregunta tbody tr td.actual{
-      background: #3354a5 !important;
+      background: #E1BE54 !important;
     }
 
     table#tablePregunta tbody tr td.contestada{
-      background: #00bc91;
+      background: #288C93;
     }
 
     #btnSegLeyendo{
@@ -57,52 +78,48 @@
       font-weight: bold;
       cursor: pointer;
     }
+   
+    .checkSpan{
+      background-color: white;
+      border: 2px solid #6189cb;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    input[type="radio"]{
+      display: none;
+    }
   </style>
 </head>
 <body>
 
-<nav class="navbar navbar-default navbar-fixed-top" style="border-bottom: 1px solid #aaa">
+<nav class="navbar navbar-default navbar-fixed-top" style="border-bottom: 1px solid #aaa; background:#494E6B;">
   <div class="container-fluid">
     <div class="row" style="margin-top: 8px;">
-      <div class="col-md-4">
-        <label><?= $this->session->userdata('nombre'); ?></label><label id="relog_dato">00:00:00</label>
+      <div class="col-md-2 div_nombreusuario" style="text-align: center;">
+        <label id="nombreusuario"><?= $this->session->userdata('nombre'); ?></label>
       </div>
-      <div class="col-md-4" id="divBtnInicio" style="text-align: center">
-        <button class="btn btn-primary" type="button" id="btn_inicia_examen"><span class="glyphicon glyphicon-play"></span> Iniciar</button>
+      <div class="col-md-10" id="divBtnInicio" style="text-align: right">
+        <button class="btn btn-primary" type="button" id="btn_inicia_examen"><span class="glyphicon glyphicon-play"></span> Iniciar Examen</button>
       </div>
-      <div class="col-md-4 div_controles" style="text-align: center; display: none;">
-        <button class="btn btn-warning" type="button" id="btn_pausa" style="align:center"><span class="glyphicon glyphicon-pause"></span>Pausar</button>
+      <div class="col-md-2 div_controles" style="text-align: center; display: none; margin-top: -8px;">        
+        <label id="relog_dato">00:00:00</label>
+      </div>
+      <div class="col-md-4 div_controles" style="text-align: center; display: none;">        
+        <button class="btn btn-warning" type="button" id="btn_pausa" style="align:center;"><span class="glyphicon glyphicon-pause"></span>Pausar Examen</button>
       </div>
       <div class="col-md-4 div_controles" style="text-align: right; display: none;">
-        <button class="btn btn-success" type="button" id="btnFinalizar">Terminar</button>
+        <button class="btn btn-success" type="button" id="btnFinalizar">Terminar Examen</button>
       </div>
 
     </div>
-    <!--<div class="navbar-form navbar-left">
-      <div class="form-group" style="padding-right: 5px;">
-        <label><?= $this->session->userdata('nombre'); ?></label>
-      </div>
-      <div class="form-group" id="divBtnInicio">
-        <button class="btn btn-primary" type="button" id="btn_inicia_examen"><span class="glyphicon glyphicon-play"></span> Iniciar</button>
-      </div>
-      <div class="form-group">
-        <label id="relog_dato">00:00:00</label>
-      </div>
-      <div class="form-group" id="div_controles" style="display: none;">
-        <button class="btn btn-warning" type="button" id="btn_pausa" style="align:center"><span class="glyphicon glyphicon-pause"></span>Pausar</button>
-        
-      </div>
-    </div>
-    <div class="navbar-form navbar-right">
-      <button class="btn btn-success" type="button" id="btnFinalizar">Terminar</button>
-    </div>-->
   </div>
 </nav>
 
 <div class="container" id="contenedorInicio" style="text-align: center; margin-top: 70px;">
   <h2 style="text-align: center; font-weight: bold;">Instrucciones Generales</h2>
   <video controls src="./videos/videoInicio.mp4" style="max-width: 500px; margin-top: 30px;"></video>
-  <h2 style="text-align: center; font-weight: bold;">Para iniciar el examen presione el botón "Iniciar"</h1>
+  <h2 style="text-align: center; font-weight: bold;">Para iniciar el examen presione el botón "Iniciar Examen"</h1>
 </div>
   
 <div class="container" id="contenedorPreguntas" style="display: none; margin-top: 70px;">
@@ -135,12 +152,12 @@
         <table>
           <tbody>
             <tr>
-              <td style="background-color: #3354a5;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-              <td style="font-size: 12px;">&nbsp;Pregunta actual &nbsp;</td>
-              <td style="background-color: #00bc91;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-              <td style="font-size: 12px;">&nbsp;Contestadas &nbsp;</td>
-              <td style="background-color: #59a533;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-              <td style="font-size: 12px;">&nbsp;No contestadas &nbsp;</td>
+              <td style="background-color: #E1BE54;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+              <td style="font-size: 13px;">&nbsp;Pregunta actual &nbsp;</td>
+              <td style="background-color: #288C93;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+              <td style="font-size: 13px;">&nbsp;Contestadas &nbsp;</td>
+              <td style="background-color: #98878F; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+              <td style="font-size: 13px;">&nbsp;No contestadas &nbsp;</td>
             </tr>
           </tbody>
         </table>
@@ -182,16 +199,16 @@
   <div class="modal-dialog">
     <!-- Modal content-->
     <div class="modal-content">
-      <div class="modal-header" style="background-color: #c60a18;">
+      <div class="modal-header" style="background-color: #494E6B;">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"></h4>
+        <h4 class="modal-title" style="color: white;">Aviso</h4>
       </div>
       <div class="modal-body" id="modal_fin_msj">
         
       </div>
       <div class="modal-footer">
-        <button type="button" id="btn_fin" class="btn btn-success" data-dismiss="modal">Finalizar</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+        <button type="button" id="btn_fin" class="btn btn-success" data-dismiss="modal">Sí, Finalizar</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">No, Cancelar</button>
       </div>
     </div>
   </div>
@@ -200,8 +217,8 @@
 <div id="modalGuardaResp" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header" style="background-color: #122d66;">
-        <h4 class="modal-title" style="color: white;">Guardado</h4>
+      <div class="modal-header" style="background-color: #494E6B;">
+        <h4 class="modal-title" style="color: white;">Aviso</h4>
       </div>
       <div class="modal-body" id="">
         <h3>Respuesta guardada</h3>
@@ -216,22 +233,22 @@
 <div id="modalPausaCuest" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header" style="background-color: #122d66;">
-        <h4 class="modal-title" style="color: white;">Examen Pausado</h4>
+      <div class="modal-header" style="background-color: #494E6B;">
+        <h4 class="modal-title" style="color: white;">Examen en Pausa</h4>
       </div>
       <div class="modal-body" id="">
-        <h4 style="text-align: center;">Para poder continuar con el examen es necesario que use su usuario y Contraseña</h4>
+        <h4 style="text-align: center;">Para poder continuar es necesario se autentique de nuevo</h4>
         <div class="">
-          <div class="form-group">
+          <div class="form-group" style="margin-top: 15px;">
             <div class="input-group">
-              <span class="input-group-addon" style="font-weight: bold;">Cuenta de Usuario</span>
-              <input type="text" id="input_folio" class="form-control" maxlength="9">
+              <span class="input-group-addon" style="font-weight: bold; width:140px;">Cuenta de Usuario</span>
+              <input type="text" id="input_folio" class="form-control" maxlength="9" style="width:400px;">
             </div>
           </div>
           <div class="form-group">
             <div class="input-group">
-              <span class="input-group-addon" style="font-weight: bold;">Contraseña</span>
-              <input type="password" id="input_password" class="form-control">
+              <span class="input-group-addon" style="font-weight: bold; width:150px;">Contraseña</span>
+              <input type="password" id="input_password" class="form-control" style="width:400px;">
             </div>
           </div>
           <div id="errores_login2"></div>
@@ -278,4 +295,3 @@
 <script src="./js/preguntas.js"></script>
 </body>
 </html>
-

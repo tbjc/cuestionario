@@ -14,18 +14,22 @@
 		background-color: #f3f2f1;
 	}
 
-	h1, h3{
+	h1, label{
 		text-align: center;
 	}
   </style>
 </head>
 <body>
-	<div class="container" style="margin-top: 50px; text-align: center;">
-		<h1>Su examen ha concluido</h1>
-		<img src="<?= base_url() ?>img/LogoUV.png" style="max-width: 300px;">
-		<h3>Coordinación de Ingreso Escolar</h3>
-		<h3>DGAE</h3>
-		<h3>Universidad Veracruzana</h3>
+	<div class="container" style="margin-top: 150px; text-align: center;">
+		<h1>Examen concluido</h1>
+		<br><br><br><br><br><br><br><br><br><br><br>
+		<img src="<?= base_url() ?>img/LogoUV.png" style="max-width: 300px;"><br>		
+		<label>Coordinación de Ingreso y Sistemas Informáticos</label><br>
+		<label>Dirección General de Administración Escolar</label><br>
+		<label>Universidad Veracruzana</label>
 	</div>
 </body>
 </html>
+
+
+

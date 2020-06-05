@@ -93,7 +93,7 @@ function pintaPregunta(textoPregunta){
 $(document).on('click', '#btnSegLeyendo', function(event) {
 	event.preventDefault();
 	if ($(this).attr('preg-edo')=="contraido") {
-		$("#divPregTxt").html(""+pregunta+"<br><spam id='btnSegLeyendo' preg-edo='no_contraido'>Mostrar Menos</spam><br>");
+		$("#divPregTxt").html(""+pregunta+"<spam id='btnSegLeyendo' preg-edo='no_contraido'>Mostrar Menos</spam><br><br>");
 	}else{
 		let preguntaRecortada = pregunta.substr(0, 200);
 		$("#divPregTxt").html(""+preguntaRecortada+"... <spam id='btnSegLeyendo' preg-edo='contraido'>Seguir leyendo</spam><br><br>");
@@ -199,7 +199,27 @@ $(document).on('change', 'input[name=checkrespuesta]:checked', function(event) {
 	$(".liOption").each(function(index, el) {
 		$(this).removeClass('active');
 	});
+	$(".checkSpan").each(function(index, el) {
+		$(this).css('background-color', 'white');
+	});
+	$(".checkSpan[valor="+valor+"]").css('background-color',"#494e6b");
 	$(".liOption[valor-opt="+valor+"]").addClass('active');
+});
+
+$(document).on('click', '.checkSpan', function(event) {
+	event.preventDefault();
+	let valor = $(this).attr('valor');
+	console.log(valor);
+	$(".liOption").each(function(index, el) {
+		$(this).removeClass('active');
+	});
+	$(".checkSpan").each(function(index, el) {
+		$(this).css('background-color', 'white');
+	});
+	$(".checkSpan[valor="+valor+"]").css('background-color',"#494e6b");
+	$(".liOption[valor-opt="+valor+"]").addClass('active');
+	$("input[type=radio][valor="+valor+"]").prop('checked', true);
+
 });
 
 $(document).on('click', '.btn-resp', function(event) {
@@ -227,9 +247,16 @@ function seleccionaPregunta(id){
 		 $("#txtPregunta").html("Pregunta: "+ data.preg_numero);
 		let opcionesResp = '';
 		$.each(data.respuestas, function(index, val) {
-      		opcionesResp += '<li class="list-group-item liOption" valor-opt="'+val.resp_id+'">';
-      		opcionesResp += '<input type="radio" class="opcResp" name="checkrespuesta" valor="'+val.resp_id+'">'
-      		opcionesResp += '<label> &nbsp;&nbsp;'+val.resp_opcion+'&nbsp;&nbsp;&nbsp;&nbsp;' +val.resp_texto+'</label> <button type="button" class="btn btn-info btn-resp" style="float: right;" valor="'+val.resp_id+'"><span class="glyphicon glyphicon-eye-open"></span></button>'
+      		opcionesResp += '<li class="list-group-item liOption " valor-opt="'+val.resp_id+'">';
+      		opcionesResp += '<div class="row">';
+      		opcionesResp += '<div class="col-md-2" style="padding-right:0 !important; width:12.33333%;">';
+      		opcionesResp += '<span class="checkSpan" valor="'+val.resp_id+'">&nbsp;&nbsp;&nbsp;&nbsp;</span><input type="radio" class="opcResp" name="checkrespuesta" id="radio'+val.resp_id+'" valor="'+val.resp_id+'"/><label for="radio'+val.resp_id+'"> <span>&nbsp;&nbsp;'+val.resp_opcion+'</span></label>';
+      		opcionesResp += '</div><div class="col-md-9" style="padding-left:0 !important;">';
+      		opcionesResp += '<strong for="radio'+val.resp_id+'" style="max-width:610px; margin-left:10px; text-align: justify;">' +val.resp_texto+'</strong> ';
+      		opcionesResp += '</div><div class="col-md-1">';
+      		opcionesResp += '<button type="button" class="btn btn-info btn-resp" style="float: right;" valor="'+val.resp_id+'"><span class="glyphicon glyphicon-eye-open"></span></button>';
+      		opcionesResp += '</div>';
+      		opcionesResp += '</div>';
       		opcionesResp += '</li>';
 
 		});
@@ -242,6 +269,7 @@ function seleccionaPregunta(id){
 		});
 		$("td.preguntaDato[preg-id="+id+"]").addClass('actual');
 		if (data.contestada) {
+			$(".checkSpan[valor="+data.contestada+"]").css("background-color","#494e6b");
 			$("input.opcResp[valor="+data.contestada+"]").prop('checked', true);
 			$("li.liOption[valor-opt="+data.contestada+"]").addClass('active');
 		}
@@ -267,7 +295,7 @@ $(document).on('click', '#btnSalir', function(event) {
 
 $(document).on('click', '#btnFinalizar', function(event) {
 	event.preventDefault();
-	$("#modal_fin_msj").html("<h3 style='text-align:center;'>¿Estas Seguro de querer finalizar el examen?</h3>");
+	$("#modal_fin_msj").html("<h3 style='text-align:center;'>¿Estás Seguro de querer finalizar el examen?</h3>");
 	let vid = document.getElementById("videoP");
 	vid.pause();
 	$("#modalFinalizar").modal("show");
